@@ -1,8 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-
-import { HttpClient } from '@actions/http-client';
-import { BearerCredentialHandler } from '@actions/http-client/auth';
+const http = require('@actions/http-client');
+const httpAuth = require('@actions/http-client/auth');
 
 try {
   const githubToken = core.getInput('github-token');
@@ -10,8 +9,8 @@ try {
 
   const listArtifactsUrl = 'https://api.github.com/repos/beegy-dev/shaun/actions/artifacts';
         
-  client = new HttpClient('action/artifact', [
-	new BearerCredentialHandler(githubToken)
+  client = new http.HttpClient('action/artifact', [
+	new httpAuth.BearerCredentialHandler(githubToken)
   ]);
 
   requestOptions = {
