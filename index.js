@@ -14,7 +14,7 @@ async function run() {
     client = new http.HttpClient('action/artifact');
 
     requestOptions = {
-      'Authorization': `token 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`,
+      'Authorization': `token ${githubToken}`,
   	  'Accept': 'application/vnd.github.v3+json'
     };
 
