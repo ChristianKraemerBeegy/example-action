@@ -1,13 +1,13 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  github-token:
+    description: 'Github token for authentication against the Github API'
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  max-artifacts:
+    description: 'The maximum number of artifacts to keep in the repo (default = 10)'
+    required: true
+    default: 10
 runs:
   using: 'node12'
   main: 'index.js'

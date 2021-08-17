@@ -1,16 +1,27 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+import { HttpClient } from '@actions/http-client';
+import { BearerCredentialHandler } from '@actions/http-client/auth';
+
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-  console.log(`The Github Token: ${process.env['GITHUB_TOKEN']}`);
+  const githubToken = core.getInput('github-token');
+  const maxArtifacts = core.getInput('max-artifacts');
+
+  const listArtifactsUrl = 'https://api.github.com/repos/beegy-dev/shaun/actions/artifacts';
+        
+  client = new HttpClient('action/artifact', [
+	new BearerCredentialHandler(githubToken)
+  ]);
+
+  requestOptions = {
+  	'Accept': 'application/vnd.github.v3+json'
+  };
+
+  const response = await client.get(listArtifactsUrl, requestOptions);
+  const body = await response.readBody();
+  console.log(body);
+
 } catch (error) {
   core.setFailed(error.message);
 }
