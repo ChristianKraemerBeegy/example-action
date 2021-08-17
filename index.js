@@ -11,11 +11,10 @@ async function run() {
 
     const listArtifactsUrl = 'https://api.github.com/repos/beegy-dev/shaun/actions/artifacts';
         
-    client = new http.HttpClient('action/artifact', [
-	  new httpAuth.PersonalAccessTokenCredentialHandler(githubToken)
-    ]);
+    client = new http.HttpClient('action/artifact');
 
     requestOptions = {
+      'Authorization': `token ${githubToken}`,
   	  'Accept': 'application/vnd.github.v3+json'
     };
 
