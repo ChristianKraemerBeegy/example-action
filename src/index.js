@@ -26,6 +26,7 @@ async function run() {
     // Fetch of action inputs
     const githubToken = core.getInput('github-token');
     const maxArtifacts = core.getInput('max-artifacts');
+    console.log(typeof maxArtifacts);
     if (maxArtifacts < 0 || !Number.isInteger(maxArtifacts)) {
       throw 'Format of "maxArtifacts" is wrong!'
     }
