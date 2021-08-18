@@ -21,6 +21,7 @@ async function run() {
     const response = await client.get(listArtifactsUrl, requestOptions);
     const body = await response.readBody();
     console.log(body);
+    console.log("What a nice body");
 
   } catch (error) {
     core.setFailed(error.message);
