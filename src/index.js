@@ -21,6 +21,8 @@ async function run() {
     const response = await client.get(listArtifactsUrl, requestOptions);
     const body = await response.readBody();
     console.log(body);
+    console.log("What a nice body");
+    console.log(`The repo name is: ${process.env["GITHUB_REPOSITORY"]}`);
 
   } catch (error) {
     core.setFailed(error.message);
