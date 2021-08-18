@@ -53,7 +53,7 @@ async function run() {
           const date_a = new Date(a['updated_at']);
           const date_b = new Date(b['updated_at']);
 
-          return date_a - date_b;
+          return date_b - date_a;
         });
 
         for (let i = maxArtifacts; i < artifacts.length; i++) {
@@ -67,6 +67,7 @@ async function run() {
       throw `Call to API was not successful (Code: ${response.message.statusCode})`
     }
 
+    console.log('Successfully deleted old artifacts');
   } catch (error) {
     core.error(error.message);
     core.setFailed(error.message);
