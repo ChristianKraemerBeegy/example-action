@@ -40,7 +40,6 @@ async function run() {
     // API-Call
     const response = await client.get(listArtifactsUrl, header);
     const body = await response.readBody();
-    console.log(body);
 
     // Processing of the results and removal of artifacts
     if (isStatusCodeSuccess(response.message.statusCode)) {
@@ -58,7 +57,7 @@ async function run() {
         });
 
         for (let i = maxArtifacts; i < artifacts.length; i++) {
-          let deletion_response = await client.delete(artifacts[i]['url'], header);
+          let deletion_response = await client.del(artifacts[i]['url'], header);
           if (!isStatusCodeSuccess(deletion_response.message.statusCode)) {
             throw `Deletion call was not successful for artifact ${artifacts[i]['name']} (Code: ${deletion_response.message.statusCode})`
           }
