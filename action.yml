@@ -1,5 +1,5 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Delete oldest artifacts'
+description: 'This action delets the oldest artifacts in a repository. All artifacts that exceed the specified limit are removed.'
 inputs:
   github-token:
     description: 'Github token for authentication against the Github API'

@@ -59,7 +59,7 @@ async function run() {
         for (let i = maxArtifacts; i < artifacts.length; i++) {
           let deletion_response = await client.del(artifacts[i]['url'], header);
           if (!isStatusCodeSuccess(deletion_response.message.statusCode)) {
-            throw `Deletion call was not successful for artifact ${artifacts[i]['name']} (Code: ${deletion_response.message.statusCode})`
+            throw `Deletion request was not successful for artifact ${artifacts[i]['name']} (Code: ${deletion_response.message.statusCode})`
           }
         }
       }

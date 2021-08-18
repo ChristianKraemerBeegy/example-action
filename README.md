@@ -1,21 +1,24 @@
-# Hello world javascript action
+# Delete oldest artifacts 
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+This GitHub Action deletes the oldest artifacts inside a repository. If the number of artifacts exceed the limit set in the action, the oldest artifacts will be removed until the limit is met.
 
 ## Inputs
 
-## `who-to-greet`
+### `github-token`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Required** The GitHub token to authenticate against the GitHub API and access the artifacts in your repo.
 
-## Outputs
+### `max-artifacts`
 
-## `time`
+**Required** The number of artifacts that should be kept. The oldest artifacts that exceed thi number will be removed. Default `10`.
 
-The time we greeted you.
 
-## Example usage
-
-uses: actions/hello-world-javascript-action@v1.1
-with:
-  who-to-greet: 'Mona the Octocat'
+### Example usage
+```yml
+steps:
+  - name: Remove old artifacts
+  uses: ChristianKraemerBeegy/example-action@v1.24
+  with:
+  	github-token: ${{ secrets.GITHUB_TOKEN }}
+  	max-artifacts: 3
+```
