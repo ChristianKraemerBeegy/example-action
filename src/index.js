@@ -31,15 +31,14 @@ async function run() {
     }
 
     // Preparation of request
-    const listArtifactsUrl = `https://api.github.com/repos/${process.env["GITHUB_REPOSITORY"]}/actions/artifacts?per_page=100`;   
     let client = new http.HttpClient('github-API-client', [
       new httpAuth.BearerCredentialHandler(githubToken)
     ]);
+    const listArtifactsUrl = `https://api.github.com/repos/${process.env["GITHUB_REPOSITORY"]}/actions/artifacts?per_page=100`;
+    const header = {'Accept': 'application/vnd.github.v3+json'};
 
     // API-Call
-    const response = await client.get(listArtifactsUrl, {
-      'Accept': 'application/vnd.github.v3+json'
-    });
+    const response = await client.get(listArtifactsUrl, header);
     const body = await response.readBody();
     console.log(body);
 
@@ -58,7 +57,12 @@ async function run() {
           return date_a - date_b;
         });
 
-        console.log(JSON.stringify(artifacts));
+        for (let i = maxArtifacts; i < artifacts.length; i++) {
+          let deletion_response = await client.delete(artifacts[i]['url'], header);
+          if (!isStatusCodeSuccess(deletion_response.message.statusCode)) {
+            throw `Deletion call was not successful for artifact ${artifacts[i]['name']} (Code: ${deletion_response.message.statusCode})`
+          }
+        }
       }
     } else {
       throw `Call to API was not successful (Code: ${response.message.statusCode})`
