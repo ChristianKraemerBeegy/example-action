@@ -6377,7 +6377,6 @@ async function run() {
     // Fetch of action inputs
     const githubToken = core.getInput('github-token');
     const maxArtifacts = parseInt(core.getInput('max-artifacts'), 10);
-    console.log(typeof maxArtifacts);
     if (maxArtifacts < 0 || !Number.isInteger(maxArtifacts)) {
       throw 'Format of "maxArtifacts" is wrong!'
     }
@@ -6395,6 +6394,8 @@ async function run() {
     const body = await response.readBody();
     console.log(body);
 
+    console.log(response.message.statusCode);
+    console.log(isStatusCodeSuccess(response.message.statusCode));
     // Processing of the results and removal of artifacts
     if (isStatusCodeSuccess(response.message.statusCode)) {
       let data = JSON.parse(body);
@@ -6415,6 +6416,7 @@ async function run() {
     }
 
   } catch (error) {
+    core.error(error.message);
     core.setFailed(error.message);
   }
 }
