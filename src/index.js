@@ -11,10 +11,12 @@ async function run() {
 
     const listArtifactsUrl = `https://api.github.com/repos/${process.env["GITHUB_REPOSITORY"]}/actions/artifacts`;
         
-    client = new http.HttpClient('action/artifact');
+    client = new http.HttpClient('github-API-client', [
+      new httpAuth.BearerCredentialHandler(githubToken)
+    ]);
 
     requestOptions = {
-      'Authorization': `Bearer ${githubToken}`,
+      // 'Authorization': `Bearer ${githubToken}`,
   	  'Accept': 'application/vnd.github.v3+json'
     };
 
