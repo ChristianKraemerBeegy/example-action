@@ -6394,8 +6394,6 @@ async function run() {
     const body = await response.readBody();
     console.log(body);
 
-    console.log(response.message.statusCode);
-    console.log(isStatusCodeSuccess(response.message.statusCode));
     // Processing of the results and removal of artifacts
     if (isStatusCodeSuccess(response.message.statusCode)) {
       let data = JSON.parse(body);
@@ -6408,11 +6406,13 @@ async function run() {
           const date_a = new Date(a['updated_at']);
           const date_b = new Date(b['updated_at']);
 
-          return a - b;
+          return date_a - date_b;
         });
 
         console.log(JSON.stringify(artifacts));
       }
+    } else {
+      throw `Call to API was not successful (Code: ${response.message.statusCode})`
     }
 
   } catch (error) {
