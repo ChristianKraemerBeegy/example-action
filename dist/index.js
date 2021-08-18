@@ -6360,20 +6360,18 @@ async function run() {
     const githubToken = core.getInput('github-token');
     const maxArtifacts = core.getInput('max-artifacts');
 
-    const listArtifactsUrl = 'https://api.github.com/repos/beegy-dev/shaun/actions/artifacts';
+    const listArtifactsUrl = `https://api.github.com/repos/${process.env["GITHUB_REPOSITORY"]}/actions/artifacts`;
         
     client = new http.HttpClient('action/artifact');
 
     requestOptions = {
-      'Authorization': `token ${githubToken}`,
+      'Authorization': `Bearer ${githubToken}`,
   	  'Accept': 'application/vnd.github.v3+json'
     };
 
     const response = await client.get(listArtifactsUrl, requestOptions);
     const body = await response.readBody();
     console.log(body);
-    console.log("What a nice body");
-    console.log(`The repo name is: ${process.env["GITHUB_REPOSITORY"]}`);
 
   } catch (error) {
     core.setFailed(error.message);
