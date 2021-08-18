@@ -5,7 +5,7 @@ inputs:
     description: 'Github token for authentication against the Github API'
     required: true
   max-artifacts:
-    description: 'The maximum number of artifacts to keep in the repo (default = 10)'
+    description: 'The maximum number of artifacts to keep in the repo (default = 10, has to be >= 0)'
     required: true
     default: 10
 runs:
